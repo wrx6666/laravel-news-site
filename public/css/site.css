@@ -133,6 +133,7 @@ p {
 .news-body h2 {
     margin: 0 0 0.625rem;
     font: 400 clamp(1.4rem, 3vw, 2rem)/1.2 var(--serif);
+    overflow-wrap: anywhere;
 }
 
 .news-body p:last-child {
@@ -146,12 +147,12 @@ p {
     font-variant-numeric: tabular-nums;
 }
 
-.gallery {
+.gallery, .article-content {
     max-width: 58rem;
     margin-inline: auto;
 }
 
-.gallery h1 {
+.gallery h1, .article-content h1, .article-editor h1 {
     font-size: clamp(2.25rem, 5vw, 4rem);
 }
 
@@ -166,6 +167,68 @@ p {
     border-radius: 0.25rem;
 }
 
+.article-toolbar, .article-actions, .article-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+}
+
+.article-toolbar {
+    justify-content: space-between;
+}
+
+.article-toolbar h1 {
+    margin-bottom: 0;
+}
+
+.article-pagination {
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.article-pagination span {
+    color: var(--muted);
+}
+
+.article-editor {
+    max-width: 46rem;
+    margin-inline: auto;
+}
+
+.article-content h1, .article-text {
+    overflow-wrap: anywhere;
+}
+
+.article-text {
+    max-width: 44rem;
+    white-space: pre-wrap;
+}
+
+.article-actions {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+}
+
+.delete-action {
+    padding: 0.375rem 0.625rem;
+    border: 1px solid currentColor;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: #9f2d24;
+    font: inherit;
+    cursor: pointer;
+}
+
+.status-message {
+    margin-block: 1rem;
+    padding: 0.625rem 0.875rem;
+    border-left: 3px solid var(--accent);
+    background: #e4eee8;
+    color: var(--accent);
+}
+
 .signin {
     max-width: 35rem;
     margin-inline: auto;
@@ -175,7 +238,7 @@ p {
     font-size: clamp(2.25rem, 7vw, 4rem);
 }
 
-.signin-form {
+.signin-form, .article-form {
     display: grid;
     gap: 1rem;
     padding: clamp(1rem, 4vw, 2rem);
@@ -193,7 +256,7 @@ p {
     font-weight: 650;
 }
 
-.form-field input {
+.form-field :is(input, textarea) {
     width: 100%;
     padding: 0.625rem 0.75rem;
     border: 1px solid #85958a;
@@ -203,12 +266,16 @@ p {
     font: inherit;
 }
 
-.form-field input:focus-visible, .form-submit:focus-visible {
+.form-field textarea {
+    resize: vertical;
+}
+
+.form-field :is(input, textarea):focus-visible, .form-submit:focus-visible, .delete-action:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
 }
 
-.form-field input[aria-invalid='true'] {
+.form-field :is(input, textarea)[aria-invalid='true'] {
     border-color: #9f2d24;
 }
 
@@ -222,6 +289,7 @@ p {
 }
 
 .form-submit {
+    display: inline-block;
     justify-self: start;
     margin-top: 0.25rem;
     padding: 0.625rem 1rem;
@@ -231,6 +299,7 @@ p {
     color: white;
     font: inherit;
     font-weight: 650;
+    text-decoration: none;
     cursor: pointer;
 }
 

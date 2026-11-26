@@ -6,7 +6,7 @@ use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index'])->name('home');
-Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::resource('articles', ArticleController::class);
 Route::get('/galery/{article}', [MainController::class, 'galery'])->whereNumber('article')->name('galery');
 Route::view('/about', 'about')->name('about');
 Route::get('/signin', [AuthController::class, 'create'])->name('signin');

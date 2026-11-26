@@ -4,7 +4,14 @@
 
 @section('content')
     <section aria-labelledby="page-heading">
-        <h1 id="page-heading">Статьи</h1>
+        <div class="article-toolbar">
+            <h1 id="page-heading">Статьи</h1>
+            <a class="form-submit" href="{{ route('articles.create') }}">Новая статья</a>
+        </div>
+
+        @if (session('status'))
+            <p class="status-message" role="status">{{ session('status') }}</p>
+        @endif
 
         <div class="news-grid">
             @forelse ($articles as $article)
@@ -15,7 +22,7 @@
                                 {{ $article->published_at->format('d.m.Y') }}
                             </time>
                         </p>
-                        <h2>{{ $article->title }}</h2>
+                        <h2><a href="{{ route('articles.show', $article) }}">{{ $article->title }}</a></h2>
                         <p>{{ \Illuminate\Support\Str::limit($article->body, 180) }}</p>
                     </div>
                 </article>
@@ -23,5 +30,7 @@
                 <p>Статей пока нет.</p>
             @endforelse
         </div>
+
+        {{ $articles->links('articles.pagination') }}
     </section>
 @endsection
