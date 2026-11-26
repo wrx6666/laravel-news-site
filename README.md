@@ -1,10 +1,11 @@
 # Вестник
 
-Новостной сайт на Laravel и Blade. В лабораторной № 1 создан общий макет, в № 2 подключены контроллер, лента новостей и галерея, а в № 3 добавлена форма регистрации.
+Новостной сайт на Laravel и Blade. В лабораторной № 1 создан общий макет, в № 2 подключены лента новостей и галерея, в № 3 добавлена форма регистрации, в № 4 — список статей из базы данных.
 
 | Адрес | Страница |
 | --- | --- |
 | `/` | Приветствие и новости |
+| `/articles` | Статьи из базы данных |
 | `/about` | О нас |
 | `/contacts` | Контакты |
 | `/galery/{article}` | Полная фотография и описание новости |
@@ -16,13 +17,16 @@
 
 `AuthController::create()` открывает `resources/views/auth/signin.blade.php`. Форма отправляет имя, email и пароль на `POST /signin` и передаёт CSRF-токен через `@csrf`. Метод `registration()` проверяет обязательные поля, формат email и длину пароля от 8 символов. При ошибках форма показывает сообщения у полей. При успешной проверке контроллер возвращает JSON `registration.json` с именем и email. Пароль используется для проверки, а создание аккаунта в базе не входит в этот этап.
 
+Миграция создаёт таблицу `articles` с заголовком, текстом и датой публикации. `ArticleFactory` генерирует эти поля с помощью Faker, а `DatabaseSeeder` создаёт 12 записей при первом заполнении пустой таблицы. `ArticleController::index()` читает записи через модель `Article`, сортирует по дате публикации и передаёт их в `articles/index.blade.php`.
+
 ## Запуск
 
-Понадобятся PHP 8.3 или новее и Composer. База данных и сборка CSS для этих страниц не требуются.
-Если в Windows отключены расширения `fileinfo`, `mbstring` или `openssl`, включите их в файле `php.ini`. Его расположение покажет `php --ini`.
+Понадобятся PHP 8.3 или новее и Composer. Для статей используется локальная база SQLite.
+Если в Windows отключены расширения `fileinfo`, `mbstring`, `openssl` или `pdo_sqlite`, включите их в файле `php.ini`. Его расположение покажет `php --ini`.
 
 1. Выполните `composer install`.
 2. Скопируйте `.env.example` в `.env` (`Copy-Item .env.example .env` в PowerShell или `cp .env.example .env` в Bash).
 3. Заполните `SITE_AUTHOR` и `SITE_GROUP` в `.env`, чтобы в подвале отображались ваши ФИО и группа.
-4. Выполните `php artisan key:generate`, затем `php artisan serve`.
-5. Откройте [главную страницу](http://localhost:8000).
+4. Выполните `php artisan key:generate`.
+5. Создайте файл SQLite, если его ещё нет, командой `php -r "file_exists('database/database.sqlite') || touch('database/database.sqlite');"` и выполните `php artisan migrate --seed`.
+6. Запустите `php artisan serve` и откройте [главную страницу](http://localhost:8000) или [список статей](http://localhost:8000/articles).

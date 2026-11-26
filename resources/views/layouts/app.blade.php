@@ -13,6 +13,7 @@
 
             <nav class="site-nav" aria-label="Основное меню">
                 <a href="{{ route('home') }}" @if(request()->routeIs('home')) aria-current="page" @endif>Главная</a>
+                <a href="{{ route('articles.index') }}" @if(request()->routeIs('articles.index')) aria-current="page" @endif>Статьи</a>
                 <a href="{{ route('about') }}" @if(request()->routeIs('about')) aria-current="page" @endif>О нас</a>
                 <a href="{{ route('contacts') }}" @if(request()->routeIs('contacts')) aria-current="page" @endif>Контакты</a>
                 <a href="{{ route('signin') }}" @if(request()->routeIs('signin')) aria-current="page" @endif>Регистрация</a>
