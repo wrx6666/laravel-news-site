@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index'])->name('home');
 Route::get('/galery/{article}', [MainController::class, 'galery'])->whereNumber('article')->name('galery');
 Route::view('/about', 'about')->name('about');
+Route::get('/signin', [AuthController::class, 'create'])->name('signin');
+Route::post('/signin', [AuthController::class, 'registration'])->name('signin.registration');
 
 Route::get('/contacts', function () {
     $contacts = [
